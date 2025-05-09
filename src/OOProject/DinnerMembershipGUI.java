@@ -77,7 +77,7 @@ public class DinnerMembershipGUI extends JFrame {
         String phone = phoneField.getText().trim();
 
         if (name.isEmpty() || phone.isEmpty()) {
-            outputArea.setText("Name and phone number are required.");
+            outputArea.setText("Name and phone number are required to create profile.");
             return;
         }
 
@@ -115,7 +115,7 @@ public class DinnerMembershipGUI extends JFrame {
         String name = nameField.getText().trim();
         String phone = phoneField.getText().trim();
         if (name.isEmpty() || phone.isEmpty()) {
-            outputArea.setText("Name and phone number are required.");
+            outputArea.setText("Name and phone number are required to check credits.");
             return;
         }
 
