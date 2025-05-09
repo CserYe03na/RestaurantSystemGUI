@@ -140,7 +140,7 @@ public class DinnerReservationGUI extends JFrame {
                 }
             } catch (Exception ex) {
                 assignedTable = null;
-                JOptionPane.showMessageDialog(this, "Invalid input: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please enter your party size.", "Missing info.", JOptionPane.WARNING_MESSAGE);
             }
         });
         
