@@ -1,0 +1,7 @@
+orderId,restaurantId,customerName,phoneNumber,isPaid,paymentMethod,status,totalAmount
+ORD0005,2316,k,123-456,false,Cash,RECEIVED,28.98
+ORD0006,1300,Kevin,345-567,true,Credit Card,RECEIVED,35.97
+ORD0003,2316,Peter Brown,555-0303,false,DEBIT,DELIVERED,40.00
+ORD0004,2316,Kevin,234-894,false,Cash,DELIVERED,51.96
+ORD0001,2316,John Smith,555-0101,true,CASH,RECEIVED,25.50
+ORD0002,2316,Mary Johnson,555-0202,true,CREDIT,IN_PREPARATION,24.30

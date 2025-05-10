@@ -23,8 +23,8 @@ public abstract class AbstractManagerGUI extends JFrame {
         JLabel restaurantLabel = new JLabel("Restaurant: " + config.getRestaurantId() + " - " + config.getRestaurantName());
         restaurantLabel.setFont(new Font("SansSerif", Font.BOLD, 14));
 
-        loadBtn = new JButton("Load Customer Info");
-        manageBtn = new JButton("Manage Selected Customer");
+        loadBtn = new JButton("Load");
+        manageBtn = new JButton("Manage Selected");
 
         topPanel.add(restaurantLabel);
         topPanel.add(loadBtn);

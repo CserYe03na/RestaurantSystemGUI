@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ServiceSelectorGUI extends JFrame {
-	private String filePath = "C:/Users/SerenaC/eclipse-workspace/CourseHW/src/OOProject/restaurant.csv";
+	private String filePath = "/Users/k.z/Downloads/RestaurantSystemGUI/src/OOProject/restaurant.csv";
 	public ServiceSelectorGUI() {
 		setTitle("Restaurant System");
         setSize(500, 250);
@@ -68,13 +68,33 @@ public class ServiceSelectorGUI extends JFrame {
         	
         });
         
-//        //ActionListeners for order button
-//        orderBtn.addActionListener(e -> {
-//           
-//            JOptionPane.showMessageDialog(this, role + " selected 'Order'");
-//            // Launch Order page here
-//        });
-//        
+//ActionListeners for order button
+        orderBtn.addActionListener(e -> {
+            String role = (String) roleComboBox.getSelectedItem();
+            String restaurant = restaurantField.getText().trim();
+            if (restaurant.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter restaurant ID or name.");
+                return;
+            }
+
+            try {
+                RestaurantConfig config = RestaurantConfig.loadFromCSV(filePath, restaurant);
+                OrderService service = new OrderService();
+                
+                if (role.equals("Manager")) {
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        new ManagerOrderGUI(service, config).setVisible(true);
+                    });
+                } else if (role.equals("Dinner")) {
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        new DinnerOrderGUI(service, config).setVisible(true);
+                    });
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Restaurant not found: " + ex.getMessage());
+            }
+        });        
+
         //ActionListeners for membership button
         membershipBtn.addActionListener(e -> {
         	String role = (String) roleComboBox.getSelectedItem();
@@ -88,12 +108,12 @@ public class ServiceSelectorGUI extends JFrame {
             	RestaurantConfig config = RestaurantConfig.loadFromCSV(filePath, restaurant);
                 MembershipService service = new MembershipService();
                 
-                if (role == "Manager") {
+                if (role.equals("Manager")) {
             		javax.swing.SwingUtilities.invokeLater(() -> {
             			new ManagerMembershipGUI(service, config).setVisible(true);
             		});
             	}
-            	else if (role == "Dinner") {
+            	else if (role.equals("Dinner") ) {
             		javax.swing.SwingUtilities.invokeLater(() -> {
             			new DinnerMembershipGUI(service, config.getRestaurantId(), config.getRestaurantName()).setVisible(true);
             		});
