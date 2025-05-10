@@ -75,4 +75,31 @@ public class Order {
     public LocalDateTime getOrderTime() { return orderTime; }
     public String getCustomerName() { return customerName; }
     public String getPhoneNumber() { return phoneNumber; }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Order ID: ").append(orderId).append("\n");
+        sb.append("Customer: ").append(customerName).append(" (").append(phoneNumber).append(")\n");
+        sb.append("Restaurant ID: ").append(restaurantId).append("\n");
+        sb.append("Order Time: ").append(orderTime).append("\n");
+        sb.append("Status: ").append(status).append("\n");
+        sb.append("Payment Method: ").append(paymentMethod != null ? paymentMethod : "N/A").append("\n");
+        sb.append("Paid: ").append(isPaid ? "Yes" : "No").append("\n\n");
+
+        sb.append("Items:\n");
+        if (items.isEmpty()) {
+            sb.append("No items in this order.\n");
+        } else {
+            for (Map.Entry<MenuItem, Integer> entry : items.entrySet()) {
+                MenuItem item = entry.getKey();
+                int quantity = entry.getValue();
+                sb.append(String.format(" - %s x%d ($%.2f)\n", item.getName(), quantity, item.getPrice() * quantity));
+            }
+        }
+
+        sb.append("\nTotal: $").append(String.format("%.2f", totalAmount));
+        return sb.toString();
+    }
+
 }

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class MembershipService {
 //	private String restaurantId;
     private Map<String, Membership> membershipMap;
-    private String filePath = "C:/Users/SerenaC/eclipse-workspace/CourseHW/src/OOProject/membership.csv";
+    private String filePath = "C:/Users/SerenaC/eclipse-workspace/OOProject/src/OOProject/membership.csv";
 
     public MembershipService() {
         //this.restaurantId = restaurantId;

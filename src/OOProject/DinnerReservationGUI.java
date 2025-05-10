@@ -29,7 +29,7 @@ public class DinnerReservationGUI extends JFrame {
         setTitle("Dinner Reservation");
         setSize(600, 300);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //JPanel topPanel = new JPanel(new FlowLayout());
         JLabel restaurantInfoLabel = new JLabel("Restaurant: " + config.getRestaurantId() + " - " + config.getRestaurantName());

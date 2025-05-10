@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ServiceSelectorGUI extends JFrame {
-	private String filePath = "/Users/k.z/Downloads/RestaurantSystemGUI/src/OOProject/restaurant.csv";
+	private String filePath = "C:/Users/SerenaC/eclipse-workspace/CourseHW/src/OOProject/restaurant.csv";
 	public ServiceSelectorGUI() {
 		setTitle("Restaurant System");
         setSize(500, 250);

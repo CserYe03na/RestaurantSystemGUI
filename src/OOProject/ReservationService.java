@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReservationService{
-    private String filePath = "C:/Users/SerenaC/eclipse-workspace/CourseHW/src/OOProject/reservation.csv";
+    private String filePath = "C:/Users/SerenaC/eclipse-workspace/OOProject/src/OOProject/reservation.csv";
     private Map<String, Reservation> reservations = new HashMap<>();
     private int currentId = 0;
     private RestaurantConfig config;

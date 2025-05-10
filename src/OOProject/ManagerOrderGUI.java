@@ -66,6 +66,7 @@ public class ManagerOrderGUI extends AbstractManagerGUI {
 
         String orderId = (String) tableModel.getValueAt(selectedRow, 0);
         Order order = service.getOrder(orderId);
+        System.out.printf(orderId);
         
         String[] options = {"Update Status", "Mark as Paid", "View Details"};
         int choice = JOptionPane.showOptionDialog(this, "Choose action:", "Manage Order",
@@ -91,17 +92,19 @@ public class ManagerOrderGUI extends AbstractManagerGUI {
                 loadData();
                 break;
             case 2: // View Details
-                StringBuilder details = new StringBuilder();
-                details.append("Order Details:\n\n");
-                for (Map.Entry<MenuItem, Integer> entry : order.getItems().entrySet()) {
-                    details.append(String.format("%s x%d - $%.2f\n",
-                        entry.getKey().getName(),
-                        entry.getValue(),
-                        entry.getKey().getPrice() * entry.getValue()));
-                }
-                details.append("\nTotal: $").append(String.format("%.2f", order.getTotalAmount()));
-                JOptionPane.showMessageDialog(this, details.toString());
+            	JOptionPane.showMessageDialog(this, order.toString());
                 break;
+//                StringBuilder details = new StringBuilder();
+//                details.append("Order Details:\n\n");
+//                for (Map.Entry<MenuItem, Integer> entry : order.getItems().entrySet()) {
+//                    details.append(String.format("%s x%d - $%.2f\n",
+//                        entry.getKey().getName(),
+//                        entry.getValue(),
+//                        entry.getKey().getPrice() * entry.getValue()));
+//                }
+//                details.append("\nTotal: $").append(String.format("%.2f", order.getTotalAmount()));
+//                JOptionPane.showMessageDialog(this, details.toString());
+//                break;
         }
     }
 }

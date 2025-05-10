@@ -6,7 +6,8 @@ import java.util.*;
 
 public class OrderService {
     private Map<String, Order> orders;
-    private String filePath = "/Users/k.z/Downloads/RestaurantSystemGUI/src/OOProject/orders.csv";
+    private String filePath = "C:/Users/SerenaC/eclipse-workspace/OOProject/src/OOProject/orders.csv";
+    private String menuPath = "C:/Users/SerenaC/eclipse-workspace/OOProject/src/OOProject/menu.csv";
     private int currentId = 0;
 
     public OrderService() {
@@ -31,7 +32,7 @@ public class OrderService {
 
     public List<MenuItem> getMenuItems() {
         List<MenuItem> items = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("/Users/k.z/Downloads/RestaurantSystemGUI/src/OOProject/menu.csv"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(menuPath))) {
             String header = reader.readLine(); // Skip header
             String line;
             while ((line = reader.readLine()) != null) {
@@ -47,20 +48,32 @@ public class OrderService {
     public void loadOrders() {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line = reader.readLine(); // Skip header
-            
+
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length < 8) continue; // Skip invalid lines
+                String[] parts = line.split(",", -1);
+                if (parts.length < 9) continue;
+
                 Order order = new Order(parts[0], parts[1], parts[2], parts[3]);
                 order.setPaid(Boolean.parseBoolean(parts[4]));
                 order.setPaymentMethod(parts[5]);
-                if ("OrderStatus".equals(parts[6])) {
-                    // skip header row
-                    continue;
-                }
                 order.setStatus(Order.OrderStatus.valueOf(parts[6]));
-                // Set total amount directly using the setter
                 order.setTotalAmount(Double.parseDouble(parts[7]));
+
+                String itemsStr = parts[8];
+                for (String itemStr : itemsStr.split("\\|")) {
+                    if (!itemStr.isEmpty()) {
+                        String[] itemParts = itemStr.split("-");
+                        String itemName = itemParts[0];
+                        int qty = Integer.parseInt(itemParts[1]);
+
+                        for (MenuItem item : getMenuItems()) {
+                            if (item.getName().equals(itemName)) {
+                                order.addItem(item, qty);
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 orders.put(order.getOrderId(), order);
                 int id = Integer.parseInt(parts[0].substring(3));
@@ -73,10 +86,16 @@ public class OrderService {
 
     public void saveOrders() {
         try (PrintWriter writer = new PrintWriter(filePath)) {
-            writer.println("orderId,restaurantId,customerName,phoneNumber,isPaid,paymentMethod,status,totalAmount");
+            writer.println("orderId,restaurantId,customerName,phoneNumber,isPaid,paymentMethod,status,totalAmount,items");
 
             for (Order order : orders.values()) {
-                writer.println(String.format("%s,%s,%s,%s,%b,%s,%s,%.2f",
+                StringBuilder itemStr = new StringBuilder();
+                for (Map.Entry<MenuItem, Integer> entry : order.getItems().entrySet()) {
+                    itemStr.append(entry.getKey().getName()).append("-").append(entry.getValue()).append("|");
+                }
+                if (itemStr.length() > 0) itemStr.setLength(itemStr.length() - 1); // remove trailing |
+
+                writer.println(String.format("%s,%s,%s,%s,%b,%s,%s,%.2f,%s",
                     order.getOrderId(),
                     order.getRestaurantId(),
                     order.getCustomerName(),
@@ -84,8 +103,9 @@ public class OrderService {
                     order.isPaid(),
                     order.getPaymentMethod(),
                     order.getStatus(),
-                    order.getTotalAmount()
-                    ));
+                    order.getTotalAmount(),
+                    itemStr.toString()
+                ));
             }
         } catch (IOException e) {
             System.err.println("Error saving orders: " + e.getMessage());
