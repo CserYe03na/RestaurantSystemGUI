@@ -66,7 +66,6 @@ public class ManagerOrderGUI extends AbstractManagerGUI {
 
         String orderId = (String) tableModel.getValueAt(selectedRow, 0);
         Order order = service.getOrder(orderId);
-        System.out.printf(orderId);
         
         String[] options = {"Update Status", "Mark as Paid", "View Details"};
         int choice = JOptionPane.showOptionDialog(this, "Choose action:", "Manage Order",
